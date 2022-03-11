@@ -51,7 +51,7 @@
 It is original by https://www.unicode.org/Public/UNIDATA/Blocks.txt")
 
 ;;;###autoload
-(defconst unicode-block-blocks (unicode-block--read-blocks-file unicode-block--blocks-file)
+(defvar unicode-block-blocks (unicode-block--read-blocks-file unicode-block--blocks-file)
   "Alist of Unicode Blocks.
 
 Each element has the form: (NAME . (START-CODE . END-CODE))")
