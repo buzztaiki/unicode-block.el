@@ -41,5 +41,11 @@
                      ("Latin-1 Supplement" . (#x0080 . #x00FF)))))))
 
 
+(ert-deftest test-unicode-block-map-block-chars ()
+  (let ((res (unicode-block-map-block-chars #'identity "Basic Latin")))
+    (should (equal res (number-sequence #x0000 #x007F)))
+    (should (equal (car res) #x0000))
+    (should (equal (car (last res)) #x007F))))
+
 (provide 'unicode-block-tests)
 ;;; unicode-block-tests.el ends here

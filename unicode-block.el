@@ -58,16 +58,20 @@ Each element has the form: (NAME . (START-CODE . END-CODE))")
 
 
 ;;;###autoload
+(defun unicode-block-map-block-chars (fn block)
+  "Apply FN to each character of Unicode's BLOCK."
+  (pcase-let ((`(,start . ,end) (alist-get block unicode-block-blocks nil nil #'equal)))
+    (mapcar fn (seq-filter #'characterp (number-sequence start end)))))
+
+;;;###autoload
 (defun unicode-block-list-block-chars (block)
   "Display a list of characters in Unicode's BLOCK."
   (interactive (list (completing-read "Unicode block: " unicode-block-blocks nil t)))
   (with-output-to-temp-buffer "*Unicode block*"
     (with-current-buffer standard-output
-      (cl-loop
-       with (start-code . end-code) = (alist-get block unicode-block-blocks nil nil #'equal)
-       for code from start-code to end-code
-       if (characterp code)
-       do (insert (format "%s\t#%06x\t%s\n" (char-to-string code) code (or (get-char-code-property code 'name) "-")))))))
+      (unicode-block-map-block-chars
+       (lambda (x) (insert (format "%c\t#%06x\t%s\n" x x (or (get-char-code-property x 'name) "-"))))
+       block))))
 
 (provide 'unicode-block)
 ;;; unicode-block.el ends here
