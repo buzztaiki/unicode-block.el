@@ -3,6 +3,9 @@
 ;; Copyright (C) 2022  Taiki Sugawara
 
 ;; Author: Taiki Sugawara <buzz.taiki@gmail.com>
+;; Version: 0.0.1
+;; URL: https://github.com/buzztaiki/unicode-block.el
+;; Package-Requires: ((emacs "25.1"))
 
 ;; This program is free software; you can redistribute it and/or modify
 ;; it under the terms of the GNU General Public License as published by
@@ -22,9 +25,6 @@
 ;; This package provides `unicode-block-blocks' to discover Unicode Blocks.
 
 ;;; Code:
-
-(require 'cl-lib)
-(require 'pcase)
 
 (defun unicode-block--read-blocks-buffer (buffer)
   "Read unicode blocks from a BUFFER."
