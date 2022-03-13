@@ -50,23 +50,26 @@
 
 It is original by https://www.unicode.org/Public/UNIDATA/Blocks.txt")
 
-;;;###autoload
-(defvar unicode-block-blocks (unicode-block--read-blocks-file unicode-block--blocks-file)
-  "Alist of Unicode Blocks.
+(defvar unicode-block--blocks nil)
 
-Each element has the form: (NAME . (START-CODE . END-CODE))")
+;;;###autoload
+(defun unicode-block-blocks ()
+  "Get an alist of Unicode Blocks.
+Each element has the form: (NAME . (START-CODE . END-CODE))"
+  (or unicode-block--blocks
+      (setq unicode-block--blocks (unicode-block--read-blocks-file unicode-block--blocks-file))))
 
 
 ;;;###autoload
 (defun unicode-block-map-block-chars (fn block)
   "Apply FN to each character of Unicode's BLOCK."
-  (pcase-let ((`(,start . ,end) (alist-get block unicode-block-blocks nil nil #'equal)))
+  (pcase-let ((`(,start . ,end) (alist-get block (unicode-block-blocks) nil nil #'equal)))
     (mapcar fn (seq-filter #'characterp (number-sequence start end)))))
 
 ;;;###autoload
 (defun unicode-block-list-block-chars (block)
   "Display a list of characters in Unicode's BLOCK."
-  (interactive (list (completing-read "Unicode block: " unicode-block-blocks nil t)))
+  (interactive (list (completing-read "Unicode block: " (unicode-block-blocks) nil t)))
   (with-output-to-temp-buffer "*Unicode block*"
     (with-current-buffer standard-output
       (unicode-block-map-block-chars
