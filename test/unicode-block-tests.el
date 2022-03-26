@@ -47,5 +47,11 @@
     (should (equal (car res) #x0000))
     (should (equal (car (last res)) #x007F))))
 
+(ert-deftest test-unicode-block-char-block ()
+  (should (equal (unicode-block-char-block ?a) "Basic Latin"))
+  (should (equal (unicode-block-char-block ?あ) "Hiragana"))
+  (should-error (unicode-block-char-block (1+ (max-char)))
+                :type '(wrong-type-argument)))
+
 (provide 'unicode-block-tests)
 ;;; unicode-block-tests.el ends here

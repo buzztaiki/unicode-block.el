@@ -63,6 +63,11 @@ Each element has the form: (NAME . (START-CODE . END-CODE))"
   (pcase-let ((`(,start . ,end) (alist-get block (unicode-block-blocks) nil nil #'equal)))
     (mapcar fn (seq-filter #'characterp (number-sequence start end)))))
 
+(defun unicode-block-char-block (char)
+  "Return a Unicode's Block of CHAR."
+  (unless (characterp char)
+    (signal 'wrong-type-argument (list 'characterp char)))
+  (car (seq-find (lambda (x) (<= (cadr x) char (cddr x))) (unicode-block-blocks))))
 
 ;;;###autoload
 (defun unicode-block-list-block-chars (block)
