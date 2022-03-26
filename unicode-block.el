@@ -52,19 +52,17 @@ It is original by https://www.unicode.org/Public/UNIDATA/Blocks.txt")
 
 (defvar unicode-block--blocks nil)
 
-;;;###autoload
 (defun unicode-block-blocks ()
   "Get an alist of Unicode Blocks.
 Each element has the form: (NAME . (START-CODE . END-CODE))"
   (or unicode-block--blocks
       (setq unicode-block--blocks (unicode-block--read-blocks-file unicode-block--blocks-file))))
 
-
-;;;###autoload
 (defun unicode-block-map-block-chars (fn block)
   "Apply FN to each character of Unicode's BLOCK."
   (pcase-let ((`(,start . ,end) (alist-get block (unicode-block-blocks) nil nil #'equal)))
     (mapcar fn (seq-filter #'characterp (number-sequence start end)))))
+
 
 ;;;###autoload
 (defun unicode-block-list-block-chars (block)
