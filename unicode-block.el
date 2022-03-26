@@ -22,7 +22,7 @@
 
 ;;; Commentary:
 
-;; This package provides `unicode-block-blocks' to discover Unicode Blocks.
+;; This package provides some functions to discover Unicode's Blocks.
 
 ;;; Code:
 
@@ -53,13 +53,13 @@ It is original by https://www.unicode.org/Public/UNIDATA/Blocks.txt")
 (defvar unicode-block--blocks nil)
 
 (defun unicode-block-blocks ()
-  "Get an alist of Unicode Blocks.
+  "Get an alist of unicode blocks.
 Each element has the form: (NAME . (START-CODE . END-CODE))"
   (or unicode-block--blocks
       (setq unicode-block--blocks (unicode-block--read-blocks-file unicode-block--blocks-file))))
 
 (defun unicode-block-map-block-chars (fn block)
-  "Apply FN to each character of Unicode's BLOCK."
+  "Apply FN to each character of unicode BLOCK."
   (pcase-let ((`(,start . ,end) (alist-get block (unicode-block-blocks) nil nil #'equal)))
     (mapcar fn (seq-filter #'characterp (number-sequence start end)))))
 
@@ -71,7 +71,7 @@ Each element has the form: (NAME . (START-CODE . END-CODE))"
 
 ;;;###autoload
 (defun unicode-block-list-block-chars (block)
-  "Display a list of characters in Unicode's BLOCK."
+  "Display a list of characters in unicode BLOCK."
   (interactive (list (completing-read "Unicode block: " (unicode-block-blocks) nil t)))
   (with-output-to-temp-buffer "*Unicode block*"
     (with-current-buffer standard-output

@@ -1,6 +1,6 @@
 # unicode-block.el
 
-This package provides `unicode-block-blocks` to discover [Unicode Blocks](https://www.unicode.org/Public/UNIDATA/Blocks.txt).
+This package provides some functions to discover [Unicode Blocks](https://www.unicode.org/Public/UNIDATA/Blocks.txt).
 
 ## Install
 For `use-package` and `quelpa`:
