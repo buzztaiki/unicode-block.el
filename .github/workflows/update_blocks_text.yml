@@ -1,0 +1,24 @@
+name: Update Blocks.txt
+
+on:
+  schedule:
+    - cron:  "11 11 * * *"
+  workflow_dispatch:
+
+jobs:
+  update_blocks_text:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Download Blocks.txt
+        run: curl -O https://www.unicode.org/Public/UNIDATA/Blocks.txt
+
+      - name: Create Pull Request If Updated
+        uses: peter-evans/create-pull-request@v4
+        with:
+          commit-message: update Blocks.txt
+          title: Update Blocks.txt
+          body: Got upstream changes.
+          branch: update_blocks_text
