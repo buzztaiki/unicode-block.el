@@ -22,5 +22,5 @@ jobs:
           commit-message: update Blocks.txt
           title: Update Blocks.txt
           body: Got upstream changes.
-          base: main
+          base: ci_update_blocks_text
           branch: update_blocks_text
