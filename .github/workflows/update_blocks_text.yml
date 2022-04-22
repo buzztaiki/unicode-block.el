@@ -2,7 +2,7 @@ name: Update Blocks.txt
 
 on:
   schedule:
-    - cron:  "11 11 * * *"
+    - cron:  "11 11 1 * *"
   workflow_dispatch:
 
 jobs:
